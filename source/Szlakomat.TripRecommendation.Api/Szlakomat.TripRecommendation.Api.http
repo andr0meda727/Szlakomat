@@ -1,0 +1,6 @@
+@Szlakomat.TripRecommendation.Api_HostAddress = http://localhost:5062
+
+GET {{Szlakomat.TripRecommendation.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
