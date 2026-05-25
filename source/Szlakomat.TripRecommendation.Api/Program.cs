@@ -1,6 +1,7 @@
 using MediatR;
 using Szlakomat.TripRecommendation.Api.Contracts;
 using Szlakomat.TripRecommendation.Application;
+using Szlakomat.TripRecommendation.Application.Planning;
 using Szlakomat.TripRecommendation.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,15 +15,66 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+app.MapPost("/api/planning/snapshot", async (
+    CreatePlanningSnapshotRequest request,
+    CorrectedPlanningInputFactory factory,
+    CancellationToken ct) =>
+{
+    var planningRequest = new PlanningInputRequest(
+        PlanningSessionId:  Guid.NewGuid().ToString(),
+        UserId:             request.UserId,
+        AttractionIds:      request.AttractionIds.ToHashSet(),
+        TravelDate:         request.TravelDate,
+        TargetCurrency:     request.TargetCurrency,
+        Weights: request.Weights is { } w
+            ? new ScoringWeights(w.ScoreWeight, w.PreferenceWeight, w.PriceWeight, w.AvailabilityWeight)
+            : null,
+        PreferredCategories: request.PreferredCategories?.Select(Enum.Parse<AttractionCategory>).ToHashSet(),
+        ExcludedCategories:  request.ExcludedCategories?.Select(Enum.Parse<AttractionCategory>).ToHashSet(),
+        Constraints: request.MaxBudget.HasValue || request.MaxAttractions.HasValue
+            ? new PlanningConstraints(
+                MaxTotalBudget:            request.MaxBudget,
+                MaxAttractions:            request.MaxAttractions,
+                MaxTotalDurationMinutes:   request.MaxTotalDurationMinutes,
+                RequireTicketAvailability: request.RequireTicketAvailability)
+            : null
+    );
+
+    var snapshot = await factory.CreateAsync(planningRequest, ct);
+
+    return Results.Ok(new
+    {
+        snapshot.PlanningSessionId,
+        snapshot.UserId,
+        snapshot.TravelDate,
+        snapshot.TargetCurrency,
+        CandidateCount = snapshot.Candidates.Count,
+        snapshot.Preferences,
+        snapshot.Constraints,
+        Candidates = snapshot.Candidates.Select(c => new
+        {
+            c.AttractionId,
+            c.DisplayName,
+            Categories             = c.Categories.Select(x => x.ToString()),
+            c.ScoreNormalized,
+            c.PriceInTargetCurrency,
+            c.PreferenceNormalized,
+            c.AvailabilityRatio,
+            c.IsTicketAvailable,
+            c.EstimatedDurationMinutes
+        })
+    });
+});
+
 app.MapPost("/api/normalization/attractions", async (
     NormalizeRequest request,
     IMediator mediator,
     CancellationToken ct) =>
 {
     var response = await mediator.Send(new NormalizeTripData(
-        UserId: request.UserId,
+        UserId:        request.UserId,
         AttractionIds: request.AttractionIds,
-        TravelDate: request.TravelDate,
+        TravelDate:    request.TravelDate,
         TargetCurrency: request.TargetCurrency), ct);
 
     return Results.Ok(response);
