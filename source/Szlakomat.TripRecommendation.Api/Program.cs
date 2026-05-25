@@ -1,4 +1,5 @@
 using MediatR;
+using Szlakomat.TripRecommendation.Api.Contracts;
 using Szlakomat.TripRecommendation.Application;
 using Szlakomat.TripRecommendation.Infrastructure;
 
@@ -28,10 +29,3 @@ app.MapPost("/api/normalization/attractions", async (
 });
 
 app.Run();
-
-public sealed record NormalizeRequest(
-    string UserId,
-    IReadOnlySet<string> AttractionIds,
-    DateOnly TravelDate,
-    string TargetCurrency
-    );
