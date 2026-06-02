@@ -24,17 +24,17 @@ public class TicketAvailabilityPolicyTests
     }
 
     [Fact]
-    public async Task EvaluateAsync_WhenTicketsAreNotRequired_ReturnsNoOpinion()
+    public void AppliesTo_WhenRequireTicketAvailabilityFalse_ReturnsFalse()
     {
-        var candidate = PlanningTestData.Candidate("sold-out", tickets: false, availability: 0m);
-        var input = PlanningTestData.Input(PlanningConstraints.None, candidate);
+        var input = PlanningTestData.Input(PlanningConstraints.None);
+        Assert.False(new TicketAvailabilityPolicy().AppliesTo(input));
+    }
 
-        var decisions = await new TicketAvailabilityPolicy().EvaluateAsync(
-            Context(input, candidate),
-            CancellationToken.None);
-
-        var decision = Assert.Single(decisions);
-        Assert.Equal(PlanningPolicyDecisionType.NoOpinion, decision.Type);
+    [Fact]
+    public void AppliesTo_WhenRequireTicketAvailabilityTrue_ReturnsTrue()
+    {
+        var input = PlanningTestData.Input(new PlanningConstraints(null, null, null, true));
+        Assert.True(new TicketAvailabilityPolicy().AppliesTo(input));
     }
 
     private static PlanningPolicyContext Context(

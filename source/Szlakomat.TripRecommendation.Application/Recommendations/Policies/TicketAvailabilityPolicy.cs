@@ -1,3 +1,5 @@
+using Szlakomat.TripRecommendation.Application.Planning;
+
 namespace Szlakomat.TripRecommendation.Application.Recommendations.Policies;
 
 public sealed class TicketAvailabilityPolicy : IPlanningPolicy
@@ -7,21 +9,13 @@ public sealed class TicketAvailabilityPolicy : IPlanningPolicy
     public string Id => "ticket-availability";
     public int Order => 100;
 
+    public bool AppliesTo(CorrectedPlanningInput input) =>
+        input.Constraints.RequireTicketAvailability;
+
     public ValueTask<IReadOnlyList<PlanningPolicyDecision>> EvaluateAsync(
         PlanningPolicyContext context,
         CancellationToken cancellationToken)
     {
-        if (!context.Input.Constraints.RequireTicketAvailability)
-        {
-            return ValueTask.FromResult<IReadOnlyList<PlanningPolicyDecision>>([
-                new PlanningPolicyDecision(
-                    PlanningPolicyDecisionType.NoOpinion,
-                    Id,
-                    "TICKET_AVAILABILITY_NOT_REQUIRED",
-                    "Ticket availability is not required for this planning session.")
-            ]);
-        }
-
         if (!context.Candidate.IsTicketAvailable)
         {
             return ValueTask.FromResult<IReadOnlyList<PlanningPolicyDecision>>([

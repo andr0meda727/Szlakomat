@@ -7,6 +7,7 @@ public sealed class DefaultPlanningPolicyFactory(IEnumerable<IPlanningPolicy> po
 {
     public IReadOnlyList<IPlanningPolicy> CreatePolicies(CorrectedPlanningInput input) =>
         policies
+            .Where(policy => policy.AppliesTo(input))
             .OrderBy(policy => policy.Order)
             .ThenBy(policy => policy.Id, StringComparer.Ordinal)
             .ToArray();

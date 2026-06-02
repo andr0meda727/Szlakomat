@@ -17,6 +17,7 @@ public static class DependencyInjection
         services.AddScoped<IBaseWorthScorer, WorthVisitingBaseScorer>();
         services.AddScoped<PlanningRuleEngine>();
         services.AddScoped<VisitPlanSelector>();
+        services.AddScoped<IPlanningPolicy, ExcludedCategoryPolicy>();
         services.AddScoped<IPlanningPolicy, TicketAvailabilityPolicy>();
         services.AddScoped<IPlanningPolicyFactory, DefaultPlanningPolicyFactory>();
 

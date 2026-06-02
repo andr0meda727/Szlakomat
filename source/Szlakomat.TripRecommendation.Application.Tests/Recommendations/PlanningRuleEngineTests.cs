@@ -69,6 +69,8 @@ public class PlanningRuleEngineTests
         public string Id { get; } = id;
         public int Order { get; } = order;
 
+        public bool AppliesTo(CorrectedPlanningInput input) => true;
+
         public ValueTask<IReadOnlyList<PlanningPolicyDecision>> EvaluateAsync(
             PlanningPolicyContext context,
             CancellationToken cancellationToken) =>
