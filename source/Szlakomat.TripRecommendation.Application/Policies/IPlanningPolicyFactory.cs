@@ -4,5 +4,5 @@ namespace Szlakomat.TripRecommendation.Application.Policies;
 
 public interface IPlanningPolicyFactory
 {
-    IReadOnlyCollection<IPlanningPolicy> CreateFor(CorrectedPlanningInput input);
+    IReadOnlyCollection<IPlanningPolicy> CreatePolicies(CorrectedPlanningInput input);
 }
