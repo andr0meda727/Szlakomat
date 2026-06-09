@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Szlakomat.Products.Architec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Szlakomat.Products.Domain.Tests", "Szlakomat.Products.Domain.Tests\Szlakomat.Products.Domain.Tests.csproj", "{7AE0522F-7A0B-432B-86B6-EBEAB7B6E4FE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Szlakomat.TripRecommendation.Application", "Szlakomat.TripRecommendation.Application\Szlakomat.TripRecommendation.Application.csproj", "{AEC0EF81-D2ED-40FE-BD2A-FE7DA904CD9F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,18 @@ Global
 		{7AE0522F-7A0B-432B-86B6-EBEAB7B6E4FE}.Release|x64.Build.0 = Release|Any CPU
 		{7AE0522F-7A0B-432B-86B6-EBEAB7B6E4FE}.Release|x86.ActiveCfg = Release|Any CPU
 		{7AE0522F-7A0B-432B-86B6-EBEAB7B6E4FE}.Release|x86.Build.0 = Release|Any CPU
+		{AEC0EF81-D2ED-40FE-BD2A-FE7DA904CD9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEC0EF81-D2ED-40FE-BD2A-FE7DA904CD9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEC0EF81-D2ED-40FE-BD2A-FE7DA904CD9F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{AEC0EF81-D2ED-40FE-BD2A-FE7DA904CD9F}.Debug|x64.Build.0 = Debug|Any CPU
+		{AEC0EF81-D2ED-40FE-BD2A-FE7DA904CD9F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AEC0EF81-D2ED-40FE-BD2A-FE7DA904CD9F}.Debug|x86.Build.0 = Debug|Any CPU
+		{AEC0EF81-D2ED-40FE-BD2A-FE7DA904CD9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEC0EF81-D2ED-40FE-BD2A-FE7DA904CD9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEC0EF81-D2ED-40FE-BD2A-FE7DA904CD9F}.Release|x64.ActiveCfg = Release|Any CPU
+		{AEC0EF81-D2ED-40FE-BD2A-FE7DA904CD9F}.Release|x64.Build.0 = Release|Any CPU
+		{AEC0EF81-D2ED-40FE-BD2A-FE7DA904CD9F}.Release|x86.ActiveCfg = Release|Any CPU
+		{AEC0EF81-D2ED-40FE-BD2A-FE7DA904CD9F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
